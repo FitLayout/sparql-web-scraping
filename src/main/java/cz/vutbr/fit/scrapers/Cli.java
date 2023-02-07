@@ -21,15 +21,13 @@ import cz.vutbr.fit.layout.rdf.model.RDFTextChunk;
 import cz.vutbr.fit.scrapers.util.ImageOutput;
 
 /**
+ * Command line interface for the SparqlScraper.
  * 
  * @author burgetr
  */
 public class Cli
 {
 
-    /**
-     * @param args
-     */
     public static void main(String[] args)
     {
         if (args.length != 2)
@@ -76,6 +74,14 @@ public class Cli
         }
     }
 
+    /**
+     * Creates a PNG image showing the page and the text chunks found by the query.
+     * 
+     * @param scraper
+     * @param chunkIRIs chunk IRIs
+     * @param filename ouput filename
+     * @throws IOException
+     */
     private static void drawImageOutput(SparqlScraper scraper, List<IRI> chunkIRIs, String filename) throws IOException
     {
         Page page = (Page) scraper.load("http://fitlayout.github.io/resource/art1");
