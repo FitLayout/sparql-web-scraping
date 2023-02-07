@@ -1,0 +1,34 @@
+PREFIX segm: <http://fitlayout.github.io/ontology/segmentation.owl#>
+PREFIX box: <http://fitlayout.github.io/ontology/render.owl#>
+PREFIX r: <http://fitlayout.github.io/resource/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+SELECT ?tbox ?ttext ?pbox ?ptext WHERE {
+    FILTER (?ty < ?py)
+    {
+        SELECT ?tbox ?tfsize ?ty ?ttext ?ttag WHERE {
+            ?tbox rdf:type segm:TextChunk .
+            ?tbox segm:hasTag r:tag-generic--title .
+            ?tbox box:fontSize ?tfsize .
+            ?tbox segm:text ?ttext .
+            ?tbox box:contentLength ?tlen .
+            ?tbox box:bounds ?tb .
+            ?tb box:positionY ?ty .
+            ?tb box:width ?tw .
+            ?tb box:height ?th
+            FILTER (?ty <= 500 && ?tlen > 10)
+        } ORDER BY DESC (?tfsize) LIMIT 10
+    }
+    {
+        SELECT ?pbox ?pfsize ?py ?ptext ?ptag WHERE {
+            ?pbox rdf:type segm:TextChunk .
+            ?pbox segm:hasTag r:tag-generic--price .
+            ?pbox box:fontSize ?pfsize .
+            ?pbox segm:text ?ptext .
+            ?pbox box:bounds ?pb .
+            ?pb box:positionY ?py .
+            ?pb box:width ?pw .
+            ?pb box:height ?ph
+            FILTER (?py <= 1200)
+        } ORDER BY DESC (?pfsize) LIMIT 10
+    }
+} ORDER BY DESC (?tfsize) DESC (?pfsize) DESC(?th) DESC(?ph) DESC(?tw) DESC(?pw) ?ty ?py LIMIT 1
