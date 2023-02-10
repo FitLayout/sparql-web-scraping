@@ -48,7 +48,8 @@ public class SparqlScraper extends BaseExtractor
         //super("/tmp/repository"); // native repository
         
         // ensure the tags are defined for the repository
-        checkTagDefs(getRepository());
+        checkTagDefs(getRepository(), "tag-generic--title", "/tags_products.ttl");
+        checkTagDefs(getRepository(), "tag-generic--name", "/tags_movies.ttl");
     }
     
     /**
@@ -109,7 +110,7 @@ public class SparqlScraper extends BaseExtractor
         // Create a chunk set
         Artifact cset = manager.applyArtifactService(
                 "FitLayout.TextChunks", 
-                Map.of("useWholeAreaText", true),
+                Map.of("useWholeAreaText", false),
                 atree1);
         
         // Store the chunk set
@@ -164,16 +165,16 @@ public class SparqlScraper extends BaseExtractor
      * 
      * @param repository the repository to check
      */
-    protected void checkTagDefs(RDFArtifactRepository repository)
+    protected void checkTagDefs(RDFArtifactRepository repository, String tagToTest, String resourceToLoad)
     {
         final ValueFactory vf = repository.getStorage().getValueFactory(); 
-        final IRI tIri = vf.createIRI(RESOURCE.NAMESPACE, "tag-generic--title");
+        final IRI tIri = vf.createIRI(RESOURCE.NAMESPACE, tagToTest);
         final Value val = repository.getStorage().getPropertyValue(tIri, RDF.TYPE);
         if (val == null)
         {
             log.info("Initializing tag definitions");
-            final IRI context = vf.createIRI("file://resources/rdf/tags_products.ttl");
-            String rdfFile = BaseExtractor.loadResource("/tags_products.ttl");
+            final IRI context = vf.createIRI("file://resources/rdf" + resourceToLoad);
+            String rdfFile = BaseExtractor.loadResource(resourceToLoad);
             try
             {
                 repository.getStorage().importTurtle(rdfFile, context);

@@ -1,0 +1,63 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix b: <http://fitlayout.github.io/ontology/render.owl#> .
+@prefix a: <http://fitlayout.github.io/ontology/segmentation.owl#> .
+@prefix fl: <http://fitlayout.github.io/ontology/fitlayout.owl#> .
+@prefix r: <http://fitlayout.github.io/resource/> .
+
+r:tag-generic--name a a:Tag;
+  a:tagger r:tagger-name;
+  a:type "generic";
+  a:name "name" . 
+
+r:tagger-name a fl:Tagger;
+  fl:service "cz.vutbr.fit.layout.text.taggers.RegexpTagger";
+  fl:param [ 
+    fl:paramName "minWords";
+    fl:paramValue "1"^^xsd:int
+  ];
+  fl:param [ 
+    fl:paramName "minWordLength";
+    fl:paramValue "1"^^xsd:int
+  ];
+  fl:param [ 
+    fl:paramName "areaExpr";
+    fl:paramValue "\p{javaUpperCase}||\d"
+  ];
+  fl:param [ 
+    fl:paramName "mainExpr";
+    fl:paramValue "\p{javaUpperCase}[\p{javaUpperCase}\p{javaLowerCase}\d\p{Zs}\.\,\/\:\-\p{Pd}]*"
+  ];
+  fl:param [ 
+    fl:paramName "contExpr";
+    fl:paramValue "[\p{javaUpperCase}\p{javaLowerCase}\d\p{Zs}\.\,\/\:\-\p{Pd}]+"
+  ] .
+
+r:tag-generic--credit a a:Tag;
+  a:tagger r:tagger-credit;
+  a:type "generic";
+  a:name "credit" . 
+
+r:tagger-credit a fl:Tagger;
+  fl:service "cz.vutbr.fit.layout.text.taggers.RegexpTagger";
+  fl:param [ 
+    fl:paramName "minWords";
+    fl:paramValue "1"^^xsd:int
+  ];
+  fl:param [ 
+    fl:paramName "minWordLength";
+    fl:paramValue "1"^^xsd:int
+  ];
+  fl:param [ 
+    fl:paramName "areaExpr";
+    fl:paramValue "\d"
+  ];
+  fl:param [ 
+    fl:paramName "mainExpr";
+    fl:paramValue "\d+ [\p{javaUpperCase}\p{javaLowerCase}\d\p{Zs}\.\,\/\:\-\p{Pd}]*"
+  ];
+  fl:param [ 
+    fl:paramName "contExpr";
+    fl:paramValue "[\p{javaUpperCase}\p{javaLowerCase}\d\p{Zs}\.\,\/\:\-\p{Pd}]+"
+  ] .
