@@ -107,7 +107,7 @@ public class SparqlScraper extends BaseExtractor
         manager.getArtifactRepository().addArtifact(atree1);
         log.info("areaTree: " + atree1.getIri());
         
-        // Create a chunk set
+        // Create the chunk set
         Artifact cset = manager.applyArtifactService(
                 "FitLayout.TextChunks", 
                 Map.of("useWholeAreaText", false),
@@ -116,6 +116,13 @@ public class SparqlScraper extends BaseExtractor
         // Store the chunk set
         manager.getArtifactRepository().addArtifact(cset);
         log.info("chunkSet: " + cset.getIri());
+        
+        // Discover spatial relationships
+        manager.applyArtifactService(
+                "FitLayout.TextChunkConnections", 
+                Map.of("minRelationWeight", -1000.0f), 
+                cset);
+        log.info("Spatial relations finished");
     }
     
     /**
@@ -128,8 +135,10 @@ public class SparqlScraper extends BaseExtractor
     public List<IRI> execQuery(String sparqlQuery, PrintStream out)
     {
         List<IRI> ret = new ArrayList<>();
-        var bindings = getRepository().getStorage().executeSparqlTupleQuery(sparqlQuery, true, 10, 0);
+        // exec the query
+        var bindings = getRepository().getStorage().executeSparqlTupleQuery(sparqlQuery, true, 0, 0);
         Set<String> bindingNames = null;
+        // print the results
         for (BindingSet b : bindings)
         {
             if (bindingNames == null)
