@@ -4,7 +4,7 @@ PREFIX r: <http://fitlayout.github.io/resource/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
 SELECT ?name ?nbox ?character ?cbox ?episodes ?ebox WHERE {
-  ?hbox segm:belongsToChunkSet r:art4 .
+  ?hbox rdf:type segm:TextChunk .
   ?hbox segm:text ?header .
   FILTER regex(?header, 'Series Cast ')
   
