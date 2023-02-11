@@ -110,7 +110,7 @@ public class SparqlScraper extends BaseExtractor
         // Create the chunk set
         Artifact cset = manager.applyArtifactService(
                 "FitLayout.TextChunks", 
-                Map.of("useWholeAreaText", false),
+                Map.of("useWholeAreaText", true),
                 atree1);
         
         // Store the chunk set
