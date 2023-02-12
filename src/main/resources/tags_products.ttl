@@ -27,7 +27,7 @@ r:tagger-title a fl:Tagger;
   ];
   fl:param [ 
     fl:paramName "mainExpr";
-    fl:paramValue "\p{javaUpperCase}[\p{javaUpperCase}\p{javaLowerCase}\d\s\.\:\-\p{Pd}]*"
+    fl:paramValue "\p{javaUpperCase}[\p{javaUpperCase}\p{javaLowerCase}\d\s\.\:\-\/\p{Pd}]*"
   ];
   fl:param [ 
     fl:paramName "contExpr";
