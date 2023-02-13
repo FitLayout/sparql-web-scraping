@@ -2,14 +2,13 @@ PREFIX segm: <http://fitlayout.github.io/ontology/segmentation.owl#>
 PREFIX box: <http://fitlayout.github.io/ontology/render.owl#>
 PREFIX r: <http://fitlayout.github.io/resource/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX flfn: <http://fitlayout.github.io/fn/>
 
 SELECT ?name ?nbox ?character ?cbox ?episodes ?ebox WHERE {
   ?hbox rdf:type segm:TextChunk .
   ?hbox segm:text ?header .
-  FILTER regex(?header, 'Series Cast ')
   
-  ?nbox r:rel-below ?hbox .              # Names are below the header
-  ?nbox segm:hasTag r:tag-generic--name .
+  ?nbox segm:hasTag r:tag-generic--name . # Actor names
   ?nbox segm:text ?name .
 
   ?cbox r:rel-after ?nbox .              # Character names after the header
@@ -19,4 +18,6 @@ SELECT ?name ?nbox ?character ?cbox ?episodes ?ebox WHERE {
   ?ebox r:rel-after ?cbox .              # Episodes after the character
   ?ebox segm:hasTag r:tag-generic--credit .
   ?ebox segm:text ?episodes .
+  
+  FILTER (regex(?header, 'Series Cast ') && flfn:isBelow(?nbox, ?hbox))
 }

@@ -71,7 +71,7 @@ public class SparqlScraper extends BaseExtractor
                 Map.of("url", url.toString(),
                         "width", 1200,
                         "height", 800,
-                        "persist", 3,
+                        "persist", 0,
                         "acquireImages", false,
                         "includeScreenshot", true),
                 null);
@@ -120,7 +120,7 @@ public class SparqlScraper extends BaseExtractor
         // Discover spatial relationships
         manager.applyArtifactService(
                 "FitLayout.TextChunkConnections", 
-                Map.of("minRelationWeight", -1000.0f), 
+                Map.of("minRelationWeight", 0.1f), 
                 cset);
         log.info("Spatial relations finished");
     }
