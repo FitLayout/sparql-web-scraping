@@ -19,4 +19,4 @@ See the [sparql](https://github.com/FitLayout/sparql-web-scraping/tree/main/spar
 
 ## Results
 
-Sample results are available in the [results](https://github.com/FitLayout/sparql-web-scraping/tree/main/results) folder.
+Sample results are available in a [separate repository](https://github.com/FitLayout/sparql-web-scraping-results).
